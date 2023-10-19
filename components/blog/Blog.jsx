@@ -13,7 +13,7 @@ const Blog = () => {
                 <Image
                   width={391}
                   height={258}
-                  layout="responsive"
+                  
                   src={item.img}
                   alt="blog post"
                 />

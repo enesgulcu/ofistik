@@ -1,0 +1,35 @@
+// Model Güncellendiğinde yapılacaklar:
+// 1-" npx prisma generate " bunu terminale yaz (enter!)
+// 2- VS Codu kapatıp yeniden aç.
+// ! Sırayla yaparsan gücelleme gerçekleşir.
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Measurements {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  firstValue String?
+
+  secondValue String?
+  unit        String?
+
+  oneRangeEnabled  Boolean
+  twoRangeEnabled  Boolean
+  manuelDefined    Boolean
+  translateEnabled Boolean?
+
+  turkish   String?
+  ukrainian String?
+  english   String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+

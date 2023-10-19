@@ -29,7 +29,7 @@ const Testimonial = () => {
                   <Image
                     width={50}
                     height={50}
-                    layout="responsive"
+                    
                     src={item.avatar}
                     alt="testimonial"
                   />

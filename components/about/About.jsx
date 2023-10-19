@@ -46,7 +46,7 @@ const About = () => {
             <Image
               width={234}
               height={61}
-              layout="responsive"
+              
               src="/images/resource/multi-logo.png"
               alt="resource"
             />
