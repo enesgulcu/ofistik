@@ -4,7 +4,9 @@ import React from 'react'
 
 const HomeContainer = () => {
   return (
-    <div>Home Container</div>
+    <>
+    <p className='text-red-600'>Home Container</p>
+    </>
   )
 }
 

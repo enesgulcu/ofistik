@@ -1,11 +1,11 @@
 "use client"
 import React from 'react'
-import HomeContainer from '@/container/Home/page'
+import HomeContainer from '@/containers/Home'
 
 const HomePage = () => {
   return (
-    <>
-        <HomeContainer />
+    <>  
+      <HomeContainer />
     </>
   )
 }
