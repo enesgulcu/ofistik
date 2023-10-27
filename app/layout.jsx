@@ -15,12 +15,13 @@ if (typeof window !== "undefined") {
 }
 
 export default function RootLayout({ children }) {
-  // useEffect(() => {
-  //   Aos.init({
-  //     duration: 1400,
-  //     once: true,
-  //   });
-  // }, []);
+  useEffect(() => {
+    Aos.init({
+      duration: 1400,
+      once: true,
+      easing: "ease-in-out",
+    });
+  }, []);
   return (
     <html lang="en">
       <head>
@@ -46,7 +47,6 @@ export default function RootLayout({ children }) {
         <Provider store={store}>
           <div className="page-wrapper">
             {children}
-
             {/* Toastify */}
             <ToastContainer
               position="bottom-right"
@@ -62,6 +62,8 @@ export default function RootLayout({ children }) {
             />
             {/* <!-- Scroll To Top --> */}
             {/* <ScrollToTop /> */}
+            <div>
+            </div>
           </div>
         </Provider>
       </body>
