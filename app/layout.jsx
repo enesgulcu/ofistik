@@ -1,24 +1,12 @@
 "use client";
 import '@/styles/globals.css'
-import "../styles/index.scss";
-import { useEffect } from "react";
 import { Provider } from "react-redux";
 import { store } from "../store/store";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 
-if (typeof window !== "undefined") {
-  require("bootstrap/dist/js/bootstrap");
-}
-
 export default function RootLayout({ children }) {
-  useEffect(() => {
-    Aos.init({
-      duration: 1400,
-      once: true,
-      easing: "ease-in-out",
-    });
-  }, []);
+ 
   return (
     <html lang="en">
       <head>
