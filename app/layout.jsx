@@ -1,10 +1,7 @@
 "use client";
-import Aos from "aos";
 import '@/styles/globals.css'
-import "aos/dist/aos.css";
 import "../styles/index.scss";
 import { useEffect } from "react";
-//import ScrollToTop from "../components/common/ScrollTop";
 import { Provider } from "react-redux";
 import { store } from "../store/store";
 import "react-toastify/dist/ReactToastify.css";
