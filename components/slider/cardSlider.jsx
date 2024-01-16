@@ -1,20 +1,22 @@
 'use client'
 import React, {useRef, useState} from "react";
-import Card from "@/components/card";
-import MenuArea from "@/components/menuArea";
-import PageHeader from "@/components/pageHeader";
+import MenuArea from "@/components/slider/menuArea";
+import PageHeader from "@/components/slider/pageHeader";
+import { Card, CardContent } from "@/components/ui/card"
+import {
+    Carousel,
+    CarouselContent,
+    CarouselItem,
+    CarouselNext,
+    CarouselPrevious,
+} from "@/components/ui/carousel"
+import EmployeeCard from "@/components/slider/card";
 
 function CardSlider() {
     const [clickedButtonId, setClickedButtonId] = useState(null);
     const cardAreaRef = useRef(null);
-    const [isAtLeftEdge, setIsAtLeftEdge] = useState(true);
-    const [isAtRightEdge, setIsAtRightEdge] = useState(false);
-    const handleButtonClick = (id) => {
-        setClickedButtonId(id);
-        if (cardAreaRef.current) {
-            cardAreaRef.current.scrollLeft = 0;
-        }
-    };
+
+    const handleButtonClick = (id) => setClickedButtonId(id);
 
     const employees = [
         {
@@ -258,102 +260,51 @@ function CardSlider() {
         },
     ];
 
-    const filteredEmployees = clickedButtonId
-        ? employees.filter((employee) => employee.category === clickedButtonId)
-        : employees;
-
-    const scrollLeft = () => {
-        if (cardAreaRef.current) {
-            cardAreaRef.current.scrollLeft -= cardAreaRef.current.offsetWidth / 1.8;
-            setIsAtRightEdge(false);
-        }
-        const isAtLeftEdge = cardAreaRef.current.scrollLeft <= 0;
-        setIsAtLeftEdge(isAtLeftEdge);
-    };
-
-    const scrollRight = () => {
-        if (cardAreaRef.current) {
-            cardAreaRef.current.scrollLeft += cardAreaRef.current.offsetWidth / 1.8;
-            setIsAtLeftEdge(false);
-        }
-        const isAtRightEdge =
-            cardAreaRef.current.scrollLeft + cardAreaRef.current.offsetWidth >=
-            cardAreaRef.current.scrollWidth;
-        setIsAtRightEdge(isAtRightEdge);
-    };
-
-    const [isDragging, setIsDragging] = useState(false);
-    const [startScrollLeft, setStartScrollLeft] = useState(0);
-    const [startX, setStartX] = useState(0);
-
-    const handleMouseDown = (e) => {
-        setIsDragging(true);
-        setStartScrollLeft(cardAreaRef.current.scrollLeft);
-        setStartX(e.pageX);
-    };
-
-    const handleMouseMove = (e) => {
-        if (isDragging) {
-            e.preventDefault();
-            const deltaX = e.pageX - startX;
-            const newScrollLeft = startScrollLeft - deltaX;
-            cardAreaRef.current.scrollLeft = newScrollLeft;
-        }
-    };
-
-    const handleMouseUp = () => {
-        setIsDragging(false);
-    };
-
     return (
         <div className="h-fit w-full bg-white pb-8">
             <PageHeader/>
             <MenuArea onButtonClick={handleButtonClick}/>
-            <div
-                className="items-center gap-8 max-w-screen-xl mx-auto flex"
+            <Carousel
+                opts={{
+                    align: "start",
+                }}
+                className="w-5/6 md:w-2/3 mx-auto"
             >
-                <button onClick={scrollLeft} disabled={isAtLeftEdge} className="p-3 hidden md:flex bg-secondary rounded-full disabled:opacity-25">
-                    <i
-                        className={`fa-solid fa-circle-left text-4xl text-white stroke-white`}
-                    ></i>
-                </button>
-                <div
-                    className="cardArea flex lg:overflow-hidden snap-x overflow-x-auto transition-all duration-1500 ease-in-out ml-auto mr-auto touch-pan-x max-w-screen-xl scroll-smooth select-none"
-                    ref={cardAreaRef}
-                    onMouseDown={handleMouseDown}
-                    onMouseMove={handleMouseMove}
-                    onMouseUp={handleMouseUp}>
+                <CarouselContent>
+                    {employees
+                        .filter((ft, idx) => clickedButtonId ? ft.job.toLowerCase().includes(clickedButtonId) : true)
+                        .map((employee, index) => (
+                        <CarouselItem key={index} className="basis-auto">
+                                    <EmployeeCard
+                                        key={index}
+                                        image={employee.image}
+                                        status={employee.status}
+                                        starNumber={employee.starNumber}
+                                        name={employee.name}
+                                        job={employee.job}
+                                        category={employee.category}
+                                        videoNumber={employee.videoNumber}
+                                        callNumber={employee.callNumber}
+                                        language={employee.language}
+                                        skills={employee.skills}
+                                        price={employee.price}
+                                        showedSkillsNumber={employee.showedSkillsNumber}
+                                        apointmentDate={employee.apointmentDate}
+                                        commentNumber={employee.commentNumber}
+                                        minSessionTime={employee.minSessionTime}
+                                    />
+                        </CarouselItem>
+                    ))}
+                    {employees
+                        .filter((ft, idx) => clickedButtonId ? ft.job.toLowerCase().includes(clickedButtonId) : true).length <= 0
+                    && <CarouselItem key="empty" className="basis-auto">
+                            <h1>Empty not found</h1>
+                        </CarouselItem> }
+                </CarouselContent>
 
-                {filteredEmployees.map((employee, index) => {
-                    return (
-                        <Card
-                            key={index}
-                            image={employee.image}
-                            status={employee.status}
-                            starNumber={employee.starNumber}
-                            name={employee.name}
-                            job={employee.job}
-                            category={employee.category}
-                            videoNumber={employee.videoNumber}
-                            callNumber={employee.callNumber}
-                            language={employee.language}
-                            skills={employee.skills}
-                            price={employee.price}
-                            showedSkillsNumber={employee.showedSkillsNumber}
-                            apointmentDate={employee.apointmentDate}
-                            commentNumber={employee.commentNumber}
-                            minSessionTime={employee.minSessionTime}
-                        />
-                    );
-                })}
-                </div>
-
-                <button onClick={scrollRight} disabled={isAtRightEdge} className="p-3 hidden md:flex bg-secondary rounded-full disabled:opacity-25">
-                    <i
-                        className={`fa-solid fa-circle-right text-4xl text-white stroke-white`}
-                    ></i>
-                </button>
-            </div>
+                <CarouselNext className="hidden md:flex"/>
+                <CarouselPrevious className="hidden md:flex"/>
+            </Carousel>
         </div>
     );
 }
